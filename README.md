@@ -25,5 +25,18 @@ it is an expression that returns a function read [here](https://docs.nestjs.com/
 2. ``` @Redirect(YOUR_REDIRECT_URL, STATUS CODE) ```: redirecting to specific url from controller
 3. @Param(`id`), decorator for retrieveing route parameters
 
+# Providers:
+providers are plain javascript classes which are declared as providers in `module`, they include: services, repositories, factories, helpers, and so on.
+- Create a service to handle storage and retrieval of data so think of our service as `provider`
+- Creating new services use this command: `nest g service cats`
+- finally service is injected in controller in 
+``` 
+import { Controller } from '@nestjs/common';
 
+@Controller('cats')
+export class CatsController {
+  constructor(private catsService: CatsService) {}
+}
+
+ ```
 

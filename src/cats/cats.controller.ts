@@ -1,18 +1,22 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, Redirect } from '@nestjs/common';
 import { UpdateCatDto } from 'src/dtos/cat.dto';
-import { CreateCatDto } from 'src/dtos/create-cat.dto';
+import { CreateCatDto } from 'src/dtos/cat.dto';
+import { CatsService } from 'src/services/cats.service';
 
 @Controller('cats')
 export class CatsController {
+
+  constructor(private catsService: CatsService){}
+
   @Get()
   @HttpCode(200)
-  findAll(): string {
-    return 'This action returns all cats';
+  findAll() {
+    this.catsService.findAll();
   }
 
   @Post()
-  create(@Body() catDto: CreateCatDto): string {
-    return 'this action adds new cat';
+  create(@Body() catDto: CreateCatDto) {
+    this.catsService.create(catDto)
   }
 
   @Get(':id')
@@ -28,7 +32,7 @@ export class CatsController {
     }
 
   }
-  
+
   @Put(':id')
   update(@Param('id') id:string, cat:UpdateCatDto):string {
     return `this is method for updating ${id} cat`;
