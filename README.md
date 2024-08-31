@@ -39,4 +39,8 @@ export class CatsController {
 }
 
  ```
+## @Module()
+Module is a class annotated with @Module it helps to keep application organized as codebase and tea grow [more info](https://docs.nestjs.com/modules)
+use this command to create  a module `nest g module cats`
+N.B: Module classes themselves cannot be injected as providers due to circular dependency .
 
