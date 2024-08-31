@@ -1,7 +1,8 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Query, Redirect } from '@nestjs/common';
-import { UpdateCatDto } from 'src/dtos/cat.dto';
-import { CreateCatDto } from 'src/dtos/cat.dto';
-import { CatsService } from 'src/services/cats.service';
+import { UpdateCatDto } from 'src/cats/dtos/cat.dto';
+import { CreateCatDto } from 'src/cats/dtos/cat.dto';
+import { Cat } from 'src/cats/interfaces/cat.interface';
+import { CatsService } from './cats.service';
 
 @Controller('cats')
 export class CatsController {
@@ -10,8 +11,8 @@ export class CatsController {
 
   @Get()
   @HttpCode(200)
-  findAll() {
-    this.catsService.findAll();
+  async findAll():Promise<Cat[]> {
+    return this.catsService.findAll();
   }
 
   @Post()
