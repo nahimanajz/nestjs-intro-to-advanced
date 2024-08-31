@@ -44,3 +44,30 @@ Module is a class annotated with @Module it helps to keep application organized 
 use this command to create  a module `nest g module cats`
 N.B: Module classes themselves cannot be injected as providers due to circular dependency .
 
+## Middleware 
+[more info](https://docs.nestjs.com/middleware)
+middleware can be functional or class based middleware 
+### functional middleware 
+ file.middleare.ts
+ ```
+import { Request, Response, NextFunction } from 'express';
+
+export function logger(req: Request, res: Response, next: NextFunction) {
+  console.log(`Request...`);
+  next();
+};
+```
+
+then in app module
+
+```
+  consumer
+    .apply(logger)
+    .forRoutes(CatsController);
+```
+for global middleware we can set it in `main.ts` by calling  `use` method
+``` 
+  const app = await NestFactory.create(AppModule)
+  app.use(logger) // logger is name of our middleware
+  await app.listen(3000)
+```
