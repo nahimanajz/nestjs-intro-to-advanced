@@ -5,6 +5,8 @@ import {
   Get,
   HttpException,
   HttpStatus,
+  Param,
+  ParseIntPipe,
   Post,
   Put,
 } from '@nestjs/common';
@@ -21,18 +23,22 @@ export class SongsController {
 
   @Get()
   findAll() {
-    throw new HttpException(
+    try {
+      return this.songService.findAll();
+    } catch (error) {
+      throw new HttpException(
         'Server error',
         HttpStatus.INTERNAL_SERVER_ERROR,
         {
-          cause: 'I am testing error handling',
+          cause: error,
         },
       );
+    }
   }
 
   @Get('/:id')
-  findOne() {
-    return 'For finding one song';
+  findOne(@Param('id', new ParseIntPipe({errorHttpStatusCode:HttpStatus.NOT_ACCEPTABLE})) id: number) {
+    return `For finding one song ${typeof id}`;
   }
   @Put('/:id')
   update() {
